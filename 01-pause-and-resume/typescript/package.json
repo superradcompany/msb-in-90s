@@ -1,0 +1,14 @@
+{
+  "name": "msb-in-90s-pause-and-resume",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx priority-queue.ts"
+  },
+  "dependencies": {
+    "microsandbox": "0.7.6"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  }
+}
