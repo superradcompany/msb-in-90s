@@ -1,6 +1,6 @@
 # msb in 90s
 
-Short videos about one [microsandbox](https://github.com/superradcompany/microsandbox) feature at a time, and the code behind each one. Every episode has a 60-second CLI demo, a small TypeScript and Python version you can build on, and a script that reproduces the numbers shown in the video.
+Short videos about one [microsandbox](https://github.com/superradcompany/microsandbox) feature at a time, and the code behind each one. Every episode has a 60-second CLI demo, a small TypeScript and Python version you can build on, and a script that measures what the video shows.
 
 | Episode | What it shows | Folder |
 |---|---|---|
