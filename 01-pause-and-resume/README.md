@@ -14,21 +14,73 @@
 
 A paused sandbox uses almost no CPU. In our test each one dropped from about 100% of a core to about 2.5%.
 
-## Try it
+## Walk through it
+
+Install the CLI first with `npm i -g microsandbox`.
+
+**1. Start a sandbox with a job in it.** This creates a sandbox called `job` and starts a tiny counter inside it. The counter adds one ten times a second and writes the number to `/tmp/n`, so it stands in for any long-running work.
 
 ```bash
-npm i -g microsandbox
-./demo.sh
+msb create alpine --name job
+msb exec job -- sh -c "nohup sh -c 'n=0; while true; do n=\$((n+1)); echo \$n > /tmp/n; sleep 0.1; done' >/dev/null 2>&1 &"
 ```
 
-[`demo.sh`](demo.sh) starts three busy sandboxes, pauses them, then resumes them. Their counters carry on from where they stopped instead of starting over.
+**2. Check that it's counting.** Run this a few times and the number keeps going up.
+
+```bash
+msb exec job -- cat /tmp/n
+```
 
 ```
-   ✓ Paused       tests
-   ...
-   ✓ Resumed      tests
-  tests  step 57      (it was at 55 before the pause)
+40
 ```
+
+**3. Pause it.** Every process in the sandbox freezes on the spot, including the counter, and the sandbox drops to almost no CPU. Nothing is saved to disk. The sandbox just waits in memory, which is why this takes milliseconds.
+
+```bash
+msb pause job
+```
+
+```
+✓ Paused       job
+```
+
+**4. Try to talk to it.** A paused sandbox turns away new commands until you resume it, which is a quick way to see that it really is frozen.
+
+```bash
+msb exec job -- cat /tmp/n
+```
+
+```
+error: sandbox 'job' is in state Paused and cannot be started
+```
+
+**5. Wait a bit, then resume it.**
+
+```bash
+sleep 5
+msb resume job
+```
+
+```
+✓ Resumed      job
+```
+
+**6. Check the counter again.**
+
+```bash
+msb exec job -- cat /tmp/n
+```
+
+```
+41
+```
+
+It's at 41. If the job had kept running during those 5 seconds it would be around 91, and if it had restarted it would be back near 0. It picked up from exactly where it stopped.
+
+**7. Clean up** with `msb stop -f job` and then `msb rm job`.
+
+To see the same thing with three busy jobs at once, run [`./demo.sh`](demo.sh).
 
 <p align="center"><img src="assets/freeze.svg" width="480" alt="A beige microsandbox computer counts up on its screen, freezes under frost with a pause badge while the number holds, then thaws and keeps counting from the same number."></p>
 
