@@ -132,7 +132,7 @@ The full examples are in [`typescript/`](typescript) and [`python/`](python).
 
 ## <a href="./#gh-dark-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/info/ffffff" alt="info-dark"></a><a href="./#gh-light-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/info/000000" alt="info"></a>&nbsp;&nbsp;Good to Know
 
-- It works on local sandboxes, not on microsandbox cloud.
+- It works on local sandboxes.
 - A paused sandbox keeps its memory. Only the CPU is freed.
 - New commands are refused until you resume.
 - Network connections may time out during a long pause.
