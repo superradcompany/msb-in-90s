@@ -4,27 +4,6 @@ Your agent's long jobs are hogging the machine and urgent work just landed. Paus
 
 <p align="center"><img src="assets/cpu-list.svg" width="100%" alt="A CPU monitor lists tests, build and eval at about 100% each. After msb pause each row drops to about 2.5% and shows a pause badge, and after msb resume all three climb back to about 100%."></p>
 
-<table>
-<tr>
-<td width="64" valign="top"><img src="../assets/characters/agent-worried.svg" width="64" height="64" alt="The agent"></td>
-<td valign="top">
-
-<sub><b>THE AGENT</b></sub><br>
-My jobs are 40 minutes in and a P0 just landed. If I stop them, do they start over?
-
-</td>
-</tr>
-<tr>
-<td width="64" valign="top"><img src="../assets/characters/microsandbox-explaining.svg" width="64" height="64" alt="Microsandbox"></td>
-<td valign="top">
-
-<sub><b>MICROSANDBOX</b></sub><br>
-If you stop them, yes. If you pause them, they wait right where they are.
-
-</td>
-</tr>
-</table>
-
 ## What you need
 
 ```bash
@@ -107,27 +86,6 @@ Run them with `cd typescript && npm install && npm start` or `cd python && uv ru
 ## How it works
 
 Pause freezes every process inside the sandbox and stops its virtual CPUs. Nothing gets copied or saved anywhere. The sandbox's memory just stays where it is, which is why resume is instant and every process carries on from the exact spot it froze.
-
-<table>
-<tr>
-<td width="64" valign="top"><img src="../assets/characters/agent-curious.svg" width="64" height="64" alt="The agent"></td>
-<td valign="top">
-
-<sub><b>THE AGENT</b></sub><br>
-Does it really give the CPU back?
-
-</td>
-</tr>
-<tr>
-<td width="64" valign="top"><img src="../assets/characters/microsandbox-happy.svg" width="64" height="64" alt="Microsandbox"></td>
-<td valign="top">
-
-<sub><b>MICROSANDBOX</b></sub><br>
-Run <code>python3 measure.py</code> and see for yourself.
-
-</td>
-</tr>
-</table>
 
 [`measure.py`](measure.py) measures the three jobs' CPU while they run, while they're paused and after they resume. Here's our run, where 100% is one full core.
 
