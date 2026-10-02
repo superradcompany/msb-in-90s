@@ -54,9 +54,7 @@ A paused sandbox uses almost no CPU. In our test each one dropped from about 100
 > msb exec job -- cat /tmp/n
 > ```
 >
-> ```
-> 40
-> ```
+> → `40`
 
 #### <img height="14" src="https://octicons-col.vercel.app/stopwatch/A770EF">&nbsp;&nbsp;3. Pause It
 > Every process in the sandbox freezes on the spot, including the counter, and the sandbox drops to almost no CPU. Nothing is saved to disk. The sandbox just waits in memory, which is why this takes milliseconds.
@@ -65,9 +63,7 @@ A paused sandbox uses almost no CPU. In our test each one dropped from about 100
 > msb pause job
 > ```
 >
-> ```
->    ✓ Paused       job
-> ```
+> → `✓ Paused job`
 
 #### <img height="14" src="https://octicons-col.vercel.app/circle-slash/A770EF">&nbsp;&nbsp;4. Try to Talk to It
 > A paused sandbox turns away new commands until you resume it, which is a quick way to see that it really is frozen.
@@ -76,9 +72,7 @@ A paused sandbox uses almost no CPU. In our test each one dropped from about 100
 > msb exec job -- cat /tmp/n
 > ```
 >
-> ```
-> error: sandbox 'job' is in state Paused and cannot be started
-> ```
+> → `error: sandbox 'job' is in state Paused and cannot be started`
 
 #### <img height="14" src="https://octicons-col.vercel.app/play/A770EF">&nbsp;&nbsp;5. Resume It
 > Wait a few seconds, then resume it.
@@ -88,18 +82,14 @@ A paused sandbox uses almost no CPU. In our test each one dropped from about 100
 > msb resume job
 > ```
 >
-> ```
->    ✓ Resumed      job
-> ```
+> → `✓ Resumed job`
 
 #### <img height="14" src="https://octicons-col.vercel.app/check-circle/A770EF">&nbsp;&nbsp;6. Check the Counter Again
 > ```sh
 > msb exec job -- cat /tmp/n
 > ```
 >
-> ```
-> 41
-> ```
+> → `41`
 >
 > It's at 41. If the job had kept running during those 5 seconds it would be around 91, and if it had restarted it would be back near 0. It picked up from exactly where it stopped.
 
