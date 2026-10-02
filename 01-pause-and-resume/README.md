@@ -1,6 +1,5 @@
 <div align="center">
   <h1>Pause and Resume</h1>
-  <b>——&nbsp;&nbsp;&nbsp;msb in 90s · episode 1&nbsp;&nbsp;&nbsp;——</b>
 </div>
 
 <br />
