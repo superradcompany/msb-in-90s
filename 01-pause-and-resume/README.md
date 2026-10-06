@@ -4,7 +4,7 @@
 
 <br />
 
-<p align="center"><img src="assets/cpu-list.svg" width="560" alt="A CPU monitor lists tests, build and eval at about 100% each. After msb pause each row drops to about 2.5% and shows a pause badge, and after msb resume all three climb back to about 100%."></p>
+https://github.com/user-attachments/assets/564e7af6-53c5-4f0b-8c58-f464b6032760
 
 <br />
 
@@ -16,7 +16,7 @@
 - <img height="14" src="https://octicons-col.vercel.app/device-desktop/A770EF"> **Your Laptop Back**: You need the machine for a call, a demo or a recording.
 - <img height="14" src="https://octicons-col.vercel.app/briefcase/A770EF"> **Park a Dev Environment**: Put it away, servers and all, and come back to it later.
 - <img height="14" src="https://octicons-col.vercel.app/sync/A770EF"> **Take Turns**: Run more sandboxes than you have cores and let them share.
-- <img height="14" src="https://octicons-col.vercel.app/bug/A770EF"> **Freeze a Bad Run**: Stop it right there and inspect a running copy with `msb fork`.
+- <img height="14" src="https://octicons-col.vercel.app/bug/A770EF"> **Freeze a Bad Run**: Stop it right there before it changes more state.
 
 A paused sandbox uses almost no CPU. In our test each one dropped from about 100% of a core to about 2.5%.
 
@@ -25,51 +25,53 @@ A paused sandbox uses almost no CPU. In our test each one dropped from about 100
 ## <a href="./#gh-dark-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/terminal/ffffff" alt="cli-dark"></a><a href="./#gh-light-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/terminal/000000" alt="cli"></a>&nbsp;&nbsp;Walk Through It
 
 #### <img height="14" src="https://octicons-col.vercel.app/download/A770EF">&nbsp;&nbsp;Install the CLI
-> ```sh
-> npm i -g microsandbox
-> ```
+> Requires the [development build](https://github.com/superradcompany/microsandbox/pull/1774), not yet released. [Setup guide →](https://github.com/superradcompany/microsandbox/blob/main/DEVELOPMENT.md)
 
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/play/A770EF">&nbsp;&nbsp;1. Start a Sandbox With a Job in It
-> Create a sandbox called `job`, copy a tiny counter script into it and start the script in the background. The counter adds one ten times a second and writes the number to `/tmp/n`, so it stands in for any long-running work.
+> Create a sandbox called `pause-demo` and start a tiny counter in it. It prints a number once a second, so it stands in for any long-running work.
 >
 > ```sh
-> msb create alpine --name job
+> msb create alpine --name pause-demo
+> ```
 >
-> msb exec job -- sh -c 'cat > /counter.sh' <<'EOF'
-> n=0
-> while true; do
->   n=$((n + 1))
->   echo $n > /tmp/n
->   sleep 0.1
-> done
-> EOF
->
-> msb exec job -- sh -c 'nohup sh /counter.sh >/dev/null 2>&1 &'
+> ```sh
+> counter=$(msb exec -d --no-tty pause-demo -- sh -c '
+>   n=0
+>   while true; do
+>     n=$((n + 1))
+>     echo "$n"
+>     sleep 1
+>   done
+> ')
 > ```
 
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/eye/A770EF">&nbsp;&nbsp;2. Check That It's Counting
-> Run this a few times and the number keeps going up.
+> Run this a few times and the number keeps going up. The output below is from one run; your numbers will differ.
 >
 > ```sh
-> msb exec job -- cat /tmp/n
+> sleep 1
 > ```
 >
-> → `40`
+> ```sh
+> msb logs pause-demo --job "$counter" --tail 1
+> ```
+>
+> → `86`
 
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/stopwatch/A770EF">&nbsp;&nbsp;3. Pause It
-> Every process in the sandbox freezes on the spot, including the counter, and the sandbox drops to almost no CPU. Nothing is saved to disk. The sandbox just waits in memory, which is why this takes milliseconds.
+> Every process in the sandbox freezes on the spot, including the counter, and the sandbox drops to almost no CPU. The sandbox just waits in memory, which is why this takes milliseconds.
 >
 > ```sh
-> msb pause job
+> msb pause pause-demo
 > ```
 >
-> → `✓ Paused job`
+> → `✓ Paused pause-demo`
 
 <br />
 
@@ -77,43 +79,71 @@ A paused sandbox uses almost no CPU. In our test each one dropped from about 100
 > A paused sandbox turns away new commands until you resume it, which is a quick way to see that it really is frozen.
 >
 > ```sh
-> msb exec job -- cat /tmp/n
+> msb exec pause-demo -- echo hello
 > ```
 >
-> → `error: sandbox 'job' is in state Paused and cannot be started`
+> → `error: sandbox 'pause-demo' is in state Paused and cannot be started`
+>
+> The last counter value is still readable:
+>
+> ```sh
+> msb logs pause-demo --job "$counter" --tail 1
+> ```
+>
+> → `86`
 
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/play/A770EF">&nbsp;&nbsp;5. Resume It
-> Wait a few seconds, then resume it.
+> Wait five seconds and check the counter. It hasn't moved.
 >
 > ```sh
 > sleep 5
-> msb resume job
 > ```
 >
-> → `✓ Resumed job`
+> ```sh
+> msb logs pause-demo --job "$counter" --tail 1
+> ```
+>
+> → `86`
+>
+> Now resume it.
+>
+> ```sh
+> msb resume pause-demo
+> ```
+>
+> → `✓ Resumed pause-demo`
 
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/check-circle/A770EF">&nbsp;&nbsp;6. Check the Counter Again
 > ```sh
-> msb exec job -- cat /tmp/n
+> sleep 2
 > ```
 >
-> → `41`
+> ```sh
+> msb logs pause-demo --job "$counter" --tail 1
+> ```
 >
-> It's at 41. If the job had kept running during those 5 seconds it would be around 91, and if it had restarted it would be back near 0. It picked up from exactly where it stopped.
+> → `89`
+>
+> It's at 89. It stayed at 86 during those five seconds, then carried on counting after resume. If it had restarted, it would be back near 1. It picked up from exactly where it stopped.
 
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/trash/A770EF">&nbsp;&nbsp;7. Clean Up
 > ```sh
-> msb stop -f job
-> msb rm job
+> msb kill pause-demo --job "$counter"
 > ```
-
-<p align="center"><img src="assets/freeze.svg" width="480" alt="A beige microsandbox computer counts up on its screen, freezes under frost with a pause badge while the number holds, then thaws and keeps counting from the same number."></p>
+>
+> ```sh
+> msb stop pause-demo
+> ```
+>
+> ```sh
+> msb rm pause-demo
+> ```
 
 > [!TIP]
 >
@@ -127,6 +157,9 @@ The SDKs have the same two calls.
 
 > ```typescript
 > await sb.pause();
+> ```
+>
+> ```typescript
 > await sb.resume();
 > ```
 >
@@ -135,12 +168,15 @@ The SDKs have the same two calls.
 >
 > ```python
 > await sb.pause()
+> ```
+>
+> ```python
 > await sb.resume()
 > ```
 >
 > </details>
 
-The full examples are in [`typescript/`](typescript) and [`python/`](python).
+The full examples are in [`typescript/`](typescript) and [`python/`](python), using the development SDKs.
 
 <br />
 
@@ -148,10 +184,15 @@ The full examples are in [`typescript/`](typescript) and [`python/`](python).
 
 - It works on local sandboxes.
 - A paused sandbox keeps its memory. Only the CPU is freed.
-- New commands are refused until you resume.
+- New guest commands are refused until you resume. Saved job logs stay readable.
 - Network connections may time out during a long pause.
-- Tested with microsandbox 0.7.6 on an Apple Silicon Mac.
+- Full snapshots and forks are currently refused while detached jobs are active.
+- Tested with the detached-jobs development build on macOS, OVH Linux/KVM, and Windows ARM64/WHP with Git Bash. The companion scripts were also tested on macOS.
 
 <br />
 
 <a href="https://docs.microsandbox.dev/sandboxes/lifecycle#pause-and-resume"><img src="https://img.shields.io/badge/Pause_%26_Resume_Docs-%E2%86%92-A770EF?style=flat-square&labelColor=2b2b2b" alt="Pause and resume docs"></a>
+
+<br />
+
+<p align="center"><img src="assets/freeze.svg" width="100%" alt="A beige microsandbox computer counts up on its screen, freezes under frost with a pause badge while the number holds, then thaws and keeps counting from the same number."></p>
