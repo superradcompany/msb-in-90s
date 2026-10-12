@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420" role="img" aria-labelledby="t d"><title id="t">The sandbox only holds a placeholder</title><desc id="d">A microsandbox holds a placeholder coin instead of the real token. The coin travels to the msb wall on its way to httpbin.org, where it is swapped for a gold key that carries on to the allowed host. Sent towards evil.com, the same coin hits the wall and is blocked.</desc><style>
+.s{font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-ligatures:none}
+@keyframes c1{0%{transform:translate(292px,215px);opacity:0}4%{opacity:1}10%{transform:translate(292px,215px);animation-timing-function:ease-in-out}24%{transform:translate(372px,135px);opacity:1}26%{transform:translate(372px,135px);opacity:0}100%{transform:translate(372px,135px);opacity:0}}.c1{animation:c1 10s linear infinite}
+@keyframes k1{0%{transform:translate(428px,135px) scale(.4);opacity:0}25%{transform:translate(428px,135px) scale(.4);opacity:0}28%{transform:translate(428px,135px) scale(1);opacity:1;animation-timing-function:ease-in-out}40%{transform:translate(505px,125px) scale(1);opacity:1}46%{transform:translate(505px,125px) scale(1);opacity:1}49%{opacity:0}100%{transform:translate(505px,125px);opacity:0}}.k1{animation:k1 10s linear infinite}
+@keyframes ok{0%,39%{opacity:0;transform:translate(700px,82px) scale(.5)}42%{opacity:1;transform:translate(700px,82px) scale(1)}48%{opacity:1;transform:translate(700px,82px) scale(1)}51%,100%{opacity:0;transform:translate(700px,82px) scale(1)}}.ok{animation:ok 10s linear infinite}
+@keyframes c2{0%,52%{transform:translate(292px,215px);opacity:0}55%{transform:translate(292px,215px);opacity:1;animation-timing-function:ease-in}68%{transform:translate(370px,290px);opacity:1;animation-timing-function:ease-out}76%{transform:translate(322px,272px);opacity:1}86%{transform:translate(322px,272px);opacity:1}90%,100%{transform:translate(322px,272px);opacity:0}}.c2{animation:c2 10s linear infinite}
+@keyframes no{0%,67%{opacity:0;transform:translate(400px,290px) scale(.5)}69%{opacity:1;transform:translate(400px,290px) scale(1.15)}72%{transform:translate(400px,290px) scale(1)}86%{opacity:1;transform:translate(400px,290px) scale(1)}90%,100%{opacity:0;transform:translate(400px,290px) scale(1)}}.no{animation:no 10s linear infinite}
+@keyframes sh{0%,67%{transform:translate(0,0)}68.5%{transform:translate(4px,0)}70%{transform:translate(-3px,0)}71.5%{transform:translate(2px,0)}73%,100%{transform:translate(0,0)}}.sh{animation:sh 10s linear infinite}
+@keyframes lt{0%,8%{opacity:0}12%,44%{opacity:1}49%,100%{opacity:0}}.lt{animation:lt 10s linear infinite}
+@keyframes lb{0%,53%{opacity:0}57%,88%{opacity:1}93%,100%{opacity:0}}.lb{animation:lb 10s linear infinite}
+@media (prefers-reduced-motion:reduce){.c1,.k1,.ok,.c2,.no,.sh,.lt,.lb{animation:none}.c1,.c2,.no,.ok,.lb,.lt{opacity:0}.k1{transform:translate(505px,125px);opacity:1}}
+</style>
+<rect width="800" height="420" rx="28" fill="#F3EDE1"/>
+<rect x="0" y="360" width="800" height="60" fill="#E7DCC7"/>
+<rect x="0" y="360" width="800" height="3" fill="#D3C3A7"/>
+
+<!-- the sandbox -->
+<g transform="translate(150,215)">
+  <rect x="-104" y="-110" width="208" height="200" rx="24" fill="#CBBE9F"/>
+  <rect x="-90" y="-96" width="180" height="120" rx="14" fill="#2F2C35"/>
+  <text class="m" x="0" y="-44" text-anchor="middle" font-size="13" fill="#b5bd68">$ echo $GITHUB_TOKEN</text>
+  <text class="m" x="0" y="-18" text-anchor="middle" font-size="13" fill="#F3EDE1">$MSB_GITHUB_TOKEN</text>
+  <rect x="-40" y="40" width="80" height="10" rx="5" fill="#3A3542"/>
+  <rect x="-60" y="90" width="120" height="16" rx="6" fill="#CBBE9F"/>
+  <text class="s" x="0" y="140" text-anchor="middle" font-size="18" font-weight="700" fill="#2F2C35">sandbox</text>
+</g>
+
+<!-- the msb wall -->
+<g class="sh">
+  <rect x="384" y="60" width="32" height="300" rx="6" fill="#7C3AED"/>
+  <g fill="#a78bfa">
+    <rect x="388" y="86" width="24" height="4" rx="2"/><rect x="388" y="136" width="24" height="4" rx="2"/>
+    <rect x="388" y="186" width="24" height="4" rx="2"/><rect x="388" y="236" width="24" height="4" rx="2"/>
+    <rect x="388" y="286" width="24" height="4" rx="2"/><rect x="388" y="336" width="24" height="4" rx="2"/>
+  </g>
+  <text class="s" x="400" y="46" text-anchor="middle" font-size="18" font-weight="800" fill="#7C3AED">msb</text>
+</g>
+
+<!-- destinations -->
+<g transform="translate(660,125)">
+  <rect x="-90" y="-36" width="180" height="72" rx="16" fill="#FFFFFF"/>
+  <text class="m" x="0" y="7" text-anchor="middle" font-size="18" font-weight="700" fill="#2F2C35">httpbin.org</text>
+</g>
+<g transform="translate(660,290)">
+  <rect x="-90" y="-36" width="180" height="72" rx="16" fill="#FFFFFF"/>
+  <text class="m" x="0" y="7" text-anchor="middle" font-size="18" font-weight="700" fill="#2F2C35">evil.com</text>
+</g>
+
+<!-- captions -->
+<text class="s lt" x="400" y="398" text-anchor="middle" font-size="17" font-weight="600" fill="#2F2C35">allowed host: msb swaps in the real key</text>
+<text class="s lb" x="400" y="398" text-anchor="middle" font-size="17" font-weight="600" fill="#2F2C35">anywhere else: blocked</text>
+
+<!-- placeholder coin, allowed trip -->
+<g class="c1"><circle r="22" fill="#FFFFFF" stroke="#2F2C35" stroke-width="3" stroke-dasharray="6 4"/><text class="m" y="7" text-anchor="middle" font-size="20" font-weight="800" fill="#2F2C35">$</text></g>
+
+<!-- gold key -->
+<g class="k1"><g transform="translate(-30,0)"><circle cx="0" cy="0" r="15" fill="#E5B23A" stroke="#9A6B12" stroke-width="3"/><circle cx="0" cy="0" r="5" fill="#F3EDE1"/><rect x="13" y="-5" width="42" height="10" rx="3" fill="#E5B23A" stroke="#9A6B12" stroke-width="3"/><rect x="40" y="3" width="7" height="12" rx="2" fill="#E5B23A" stroke="#9A6B12" stroke-width="3"/><rect x="50" y="3" width="6" height="9" rx="2" fill="#E5B23A" stroke="#9A6B12" stroke-width="3"/></g></g>
+<g class="ok"><circle r="16" fill="#3F9D5A"/><path d="M-7 0 L-2 6 L8 -6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+
+<!-- placeholder coin, leak attempt -->
+<g class="c2"><circle r="22" fill="#FFFFFF" stroke="#2F2C35" stroke-width="3" stroke-dasharray="6 4"/><text class="m" y="7" text-anchor="middle" font-size="20" font-weight="800" fill="#2F2C35">$</text></g>
+<g class="no"><circle r="20" fill="#D9473B"/><path d="M-7 -7 L7 7 M7 -7 L-7 7" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/></g>
+</svg>

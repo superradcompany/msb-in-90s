@@ -30,6 +30,7 @@
 ##
 
 - <img height="14" src="https://octicons-col.vercel.app/play/A770EF"> **[1. Pause and Resume](01-pause-and-resume)**: Freeze a running sandbox in milliseconds and pick it up exactly where it stopped.
+- <img height="14" src="https://octicons-col.vercel.app/key/A770EF"> **[2. Secrets](02-secrets)**: Let code use your API key without ever seeing it. msb swaps it in on the way out, only for the host you allow.
 
 <br />
 

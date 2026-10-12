@@ -1,0 +1,14 @@
+{
+  "name": "msb-in-90s-secrets",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx secrets.ts"
+  },
+  "dependencies": {
+    "microsandbox": "0.7.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  }
+}
