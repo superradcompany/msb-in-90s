@@ -18,14 +18,16 @@ https://github.com/user-attachments/assets/564e7af6-53c5-4f0b-8c58-f464b6032760
 - <img height="14" src="https://octicons-col.vercel.app/sync/A770EF"> **Take Turns**: Run more sandboxes than you have cores and let them share.
 - <img height="14" src="https://octicons-col.vercel.app/bug/A770EF"> **Freeze a Bad Run**: Stop it right there before it changes more state.
 
-A paused sandbox uses almost no CPU. In our test each one dropped from about 100% of a core to about 2.5%.
+A paused sandbox uses almost no CPU. In our test each one dropped from about 100% of a core to about 0.1%.
 
 <br />
 
 ## <a href="./#gh-dark-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/terminal/ffffff" alt="cli-dark"></a><a href="./#gh-light-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/terminal/000000" alt="cli"></a>&nbsp;&nbsp;Walk Through It
 
 #### <img height="14" src="https://octicons-col.vercel.app/download/A770EF">&nbsp;&nbsp;Install the CLI
-> Requires the [development build](https://github.com/superradcompany/microsandbox/pull/1774), not yet released. [Setup guide →](https://github.com/superradcompany/microsandbox/blob/main/DEVELOPMENT.md)
+> ```sh
+> npm i -g microsandbox
+> ```
 
 <br />
 
@@ -176,7 +178,7 @@ The SDKs have the same two calls.
 >
 > </details>
 
-The full examples are in [`typescript/`](typescript) and [`python/`](python), using the development SDKs.
+The full examples are in [`typescript/`](typescript) and [`python/`](python), pinned to the 0.7.8 SDKs.
 
 <br />
 
@@ -187,7 +189,7 @@ The full examples are in [`typescript/`](typescript) and [`python/`](python), us
 - New guest commands are refused until you resume. Saved job logs stay readable.
 - Network connections may time out during a long pause.
 - Full snapshots and forks are currently refused while detached jobs are active.
-- Tested with the detached-jobs development build on macOS, OVH Linux/KVM, and Windows ARM64/WHP with Git Bash. The companion scripts were also tested on macOS.
+- Tested with microsandbox 0.7.8 on an Apple Silicon Mac.
 
 <br />
 

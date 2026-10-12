@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.10"
-# dependencies = ["microsandbox==0.7.6"]
+# dependencies = ["microsandbox==0.7.8"]
 # ///
 """msb in 90s, episode 1: pause and resume.
 
