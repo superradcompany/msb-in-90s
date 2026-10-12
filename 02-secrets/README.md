@@ -30,7 +30,7 @@
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/key/A770EF">&nbsp;&nbsp;1. Create a Sandbox With a Secret
-> Put a fake token in your host environment, then bind it to one host. We use httpbin.org instead of api.github.com because it echoes back what it receives, so you can watch the swap without a real token.
+> Put a fake token in your host environment, then bind it to one host. We use postman-echo.com instead of api.github.com because it echoes back what it receives, so you can watch the swap without a real token.
 >
 > ```sh
 > export GITHUB_TOKEN=ghp_fake1234567890
@@ -38,7 +38,7 @@
 >
 > ```sh
 > msb create python:3.12-bookworm --name secrets-demo \
->   --secret 'GITHUB_TOKEN@httpbin.org'
+>   --secret 'GITHUB_TOKEN@postman-echo.com'
 > ```
 
 <br />
@@ -55,17 +55,17 @@
 <br />
 
 #### <img height="14" src="https://octicons-col.vercel.app/check-circle/A770EF">&nbsp;&nbsp;3. Call the Allowed Host
-> Send the placeholder to httpbin.org. msb swaps in the real key on the way out, and httpbin.org shows what it received.
+> Send the placeholder to postman-echo.com. msb swaps in the real key on the way out, and postman-echo.com shows what it received. It replies with one line of JSON, so `tr` splits it up to pick out the header.
 >
 > ```sh
 > msb exec secrets-demo -- sh -c '
->   curl -s https://httpbin.org/headers \
+>   curl -s https://postman-echo.com/headers \
 >     -H "Authorization: Bearer $GITHUB_TOKEN" \
->     | grep Authorization
+>     | tr , "\n" | grep authorization
 > '
 > ```
 >
-> → `"Authorization": "Bearer ghp_fake1234567890",`
+> → `"authorization":"Bearer ghp_fake1234567890"`
 
 <br />
 
@@ -99,14 +99,14 @@
 > ```
 >
 > ```sh
-> msb modify secrets-demo --secret 'GITHUB_TOKEN@httpbin.org'
+> msb modify secrets-demo --secret 'GITHUB_TOKEN@postman-echo.com'
 > ```
 >
 > → `✓ Modified secrets-demo`
 >
-> Run the step 3 command again and httpbin.org gets the new key:
+> Run the step 3 command again and postman-echo.com gets the new key:
 >
-> → `"Authorization": "Bearer ghp_rotated0987654321",`
+> → `"authorization":"Bearer ghp_rotated0987654321"`
 
 <br />
 
@@ -132,7 +132,7 @@ The SDKs bind a secret to a host when you create the sandbox.
 > ```typescript
 > const sb = await Sandbox.builder("secrets-demo")
 >   .image("python:3.12-bookworm")
->   .secret((s) => s.env("GITHUB_TOKEN").value(process.env.GITHUB_TOKEN!).allow("httpbin.org"))
+>   .secret((s) => s.env("GITHUB_TOKEN").value(process.env.GITHUB_TOKEN!).allow("postman-echo.com"))
 >   .create();
 > ```
 >
@@ -143,7 +143,7 @@ The SDKs bind a secret to a host when you create the sandbox.
 > sb = await Sandbox.create(
 >     "secrets-demo",
 >     image="python:3.12-bookworm",
->     secrets=[Secret.env("GITHUB_TOKEN", value=os.environ["GITHUB_TOKEN"], allow=["httpbin.org"])],
+>     secrets=[Secret.env("GITHUB_TOKEN", value=os.environ["GITHUB_TOKEN"], allow=["postman-echo.com"])],
 > )
 > ```
 >
@@ -156,12 +156,11 @@ The full examples are in [`typescript/`](typescript) and [`python/`](python), pi
 ## <a href="./#gh-dark-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/info/ffffff" alt="info-dark"></a><a href="./#gh-light-mode-only" target="_blank"><img height="18" src="https://octicons-col.vercel.app/info/000000" alt="info"></a>&nbsp;&nbsp;Good to Know
 
 - It works on local sandboxes.
-- The allowed host does get the real key, and could send it back, as httpbin.org does here. Keep the list of allowed hosts short.
+- The allowed host does get the real key, and could send it back, as postman-echo.com does here. Keep the list of allowed hosts short.
 - Placeholders work for keys sent in requests. Code that uses the key inside the sandbox, for example to sign a request, needs the real value, and this won't help there.
-- Keys are swapped in headers by default. Query strings and request bodies are opt-in, for example `--secret 'GITHUB_TOKEN:query@httpbin.org'`.
+- Keys are swapped in headers by default. Query strings and request bodies are opt-in, for example `--secret 'GITHUB_TOKEN:query@postman-echo.com'`.
 - The CLI reads the key from your environment when the sandbox starts. The SDKs take the value directly and store it in the sandbox's host-side config.
 - msb inspects HTTPS to do the swap, so images that bring their own CA bundle can fail. `curlimages/curl` is one; `python:3.12-bookworm` works.
-- httpbin.org is a free public service and is sometimes down. If step 3 prints nothing, run it again.
 - Tested with microsandbox 0.7.8 on an Apple Silicon Mac.
 
 <br />
@@ -170,4 +169,4 @@ The full examples are in [`typescript/`](typescript) and [`python/`](python), pi
 
 <br />
 
-<p align="center"><img src="assets/swap.svg" width="480" alt="A microsandbox holds a placeholder coin. Sent towards httpbin.org, the coin reaches the msb wall and is swapped for a gold key that carries on to the allowed host. Sent towards evil.com, the same coin hits the wall and is blocked."></p>
+<p align="center"><img src="assets/swap.svg" width="480" alt="A microsandbox holds a placeholder coin. Sent towards postman-echo.com, the coin reaches the msb wall and is swapped for a gold key that carries on to the allowed host. Sent towards evil.com, the same coin hits the wall and is blocked."></p>
