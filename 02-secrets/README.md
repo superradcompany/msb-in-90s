@@ -4,7 +4,11 @@
 
 <br />
 
-<!-- video: upload ep2-secrets.mp4 here -->
+
+
+https://github.com/user-attachments/assets/436533f4-8afa-4723-a517-04890778d2fc
+
+
 
 <br />
 
@@ -166,7 +170,3 @@ The full examples are in [`typescript/`](typescript) and [`python/`](python), pi
 <br />
 
 <a href="https://docs.microsandbox.dev/sandboxes/secrets"><img src="https://img.shields.io/badge/Secrets_Docs-%E2%86%92-A770EF?style=flat-square&labelColor=2b2b2b" alt="Secrets docs"></a>
-
-<br />
-
-<p align="center"><img src="assets/swap.svg" width="480" alt="A microsandbox holds a placeholder coin. Sent towards postman-echo.com, the coin reaches the msb wall and is swapped for a gold key that carries on to the allowed host. Sent towards evil.com, the same coin hits the wall and is blocked."></p>
